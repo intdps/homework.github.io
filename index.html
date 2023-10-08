@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select, input[type="date"], textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        div[contenteditable] {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <form id="studentForm">
+        <label for="grade">Grade:</label>
+        <select id="grade" name="grade">
+            <option value="NURSERY">NURSERY</option>
+            <!-- ... other grades ... -->
+            <option value="X">GRADE X</option>
+        </select><br><br>
+
+        <label for="section">Section:</label>
+        <select id="section" name="section">
+            <option value="RAINBOW">SECTION : RAINBOW</option>
+            <!-- ... other sections ... -->
+            <option value="GAGARIAN">SECTION : GAGARIAN</option>
+        </select><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date"><br><br>
+
+        <div id="rowsContainer"></div>
+
+        <button type="button" onclick="addRow()">ADD ROW</button><br><br>
+        <button type="button" onclick="saveData()">Save</button><br><br>
+        <button type="button" onclick="refreshPage()">Refresh</button>
+    </form>
+<script>
+   
+    function showForm() {
+        document.getElementById('studentForm').style.display = 'block';
+        document.getElementById('homeworkButton').style.display = 'none';
+    }
+
+    function addRow() {
+        const rowsContainer = document.getElementById('rowsContainer');
+
+        const newRow = document.createElement('div');
+        newRow.style.marginBottom = '10px';
+        newRow.style.width = '100%';
+
+        const subjectLabel = document.createElement('label');
+        subjectLabel.innerText = 'Subject:';
+        newRow.appendChild(subjectLabel);
+
+        const subjectDiv = document.createElement('div');
+        subjectDiv.contentEditable = 'true';
+        subjectDiv.className = 'subject';
+        subjectDiv.innerText = '';  // Removed pre-added text
+        newRow.appendChild(subjectDiv);
+
+        const typeLabel = document.createElement('label');
+        typeLabel.innerText = 'Type:';
+        newRow.appendChild(typeLabel);
+
+        const typeDiv = document.createElement('div');
+        typeDiv.contentEditable = 'true';
+        typeDiv.className = 'type';
+        typeDiv.innerText = '';  // Removed pre-added text
+        newRow.appendChild(typeDiv);
+
+        const homeworkLabel = document.createElement('label');
+        homeworkLabel.innerText = 'Homework:';
+        newRow.appendChild(homeworkLabel);
+
+        const homeworkDiv = document.createElement('div');
+        homeworkDiv.contentEditable = 'true';
+        homeworkDiv.className = 'homework';
+        homeworkDiv.innerText = '';  // Removed pre-added text
+        newRow.appendChild(homeworkDiv);
+
+        rowsContainer.appendChild(newRow);
+    }
+
+    async function saveData() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const imgURL = 'https://i.imgur.com/WsGYCK6.jpg';
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.src = imgURL;
+
+        img.onload = function() {
+            const imgWidth = 210;  // A4 width
+            const imgHeight = (img.naturalHeight * imgWidth) / img.naturalWidth;
+            const marginTop = 6;  // 6px margin from top
+            doc.addImage(img, 'JPEG', 0, marginTop, imgWidth, imgHeight);
+
+            const textBoxHeight = 10;
+            const textBoxWidth = imgWidth - 20;  // 10px margin on each side
+            const textBoxYStart = imgHeight + marginTop + 30;  // 30px margin below image
+
+            const grade = document.getElementById('grade').value;
+            const section = document.getElementById('section').value;
+            const date = new Date(document.getElementById('date').value);
+            const formattedDate = `${date.getDate()} - ${date.getMonth() + 1} - ${date.getFullYear()}`;
+
+            doc.setFont('Times', 'normal');
+            doc.setFontSize(12);  // Set font size to 12 for the first three rows
+
+            let gradeText = grade;
+            if (["NURSERY", "PP1", "PP2"].includes(grade)) {
+                gradeText = "GRADE: " + grade;
+            }
+
+            doc.rect(10, textBoxYStart, textBoxWidth, textBoxHeight);
+            doc.text(gradeText, 10 + (textBoxWidth / 2), textBoxYStart + 7, { align: 'center', valign: 'top' });
+
+            doc.rect(10, textBoxYStart + textBoxHeight, textBoxWidth, textBoxHeight);
+            doc.text("SECTION: " + section, 10 + (textBoxWidth / 2), textBoxYStart + textBoxHeight + 7, { align: 'center', valign: 'top' });
+
+            doc.rect(10, textBoxYStart + (2 * textBoxHeight), textBoxWidth, textBoxHeight);
+            doc.text(formattedDate, 10 + (textBoxWidth / 2), textBoxYStart + (2 * textBoxHeight) + 7, { align: 'center', valign: 'top' });
+
+            doc.setFontSize(12);  // Updated font size to 15
+            const textYStart = textBoxYStart + (3 * textBoxHeight) + 10;  // 10px margin below last textbox
+            doc.text('Good evening, learners.', 10, textYStart);
+            doc.text("kindly fetch today's home task below", 10, textYStart + 10);
+
+            const rowYStart = textYStart + 20;  // Reduced margin to 10px
+            const subjectCellWidth = textBoxWidth * 0.2;  // 20% of total width
+            const typeCellWidth = textBoxWidth * 0.2;  // 20% of total width
+            const homeworkCellWidth = textBoxWidth * 0.6;  // 60% of total width
+            const homeworkPadding = 5;  // Padding for the homework column
+            doc.setFont('Times', 'normal');
+            doc.setFontSize(13);  // Set font size to 13 for the subsequent rows
+            
+            // Dark green background for cells
+            doc.setFillColor(0, 128, 0);
+            doc.rect(10, rowYStart, subjectCellWidth, textBoxHeight, 'F');
+            doc.rect(10 + subjectCellWidth, rowYStart, typeCellWidth, textBoxHeight, 'F');
+            doc.rect(10 + subjectCellWidth + typeCellWidth, rowYStart, homeworkCellWidth, textBoxHeight, 'F');
+
+            // Add border around the first green row and inner borders
+            doc.setDrawColor(0, 0, 0);  // Set border color to black
+            doc.rect(10, rowYStart, textBoxWidth, textBoxHeight);
+            doc.line(10 + subjectCellWidth, rowYStart, 10 + subjectCellWidth, rowYStart + textBoxHeight);
+            doc.line(10 + subjectCellWidth + typeCellWidth, rowYStart, 10 + subjectCellWidth + typeCellWidth, rowYStart + textBoxHeight);
+
+            // Add text "SUBJECT", "TYPE", and "HOMEWORK" in white color
+            doc.setTextColor(255, 255, 255);  // Set text color to white
+            doc.text("SUBJECT", 10 + (subjectCellWidth / 2), rowYStart + (textBoxHeight / 2), { align: 'center', valign: 'middle' });
+            doc.text("TYPE", 10 + subjectCellWidth + (typeCellWidth / 2), rowYStart + (textBoxHeight / 2), { align: 'center', valign: 'middle' });
+            doc.text("HOMEWORK", 10 + subjectCellWidth + typeCellWidth + (homeworkCellWidth / 2), rowYStart + (textBoxHeight / 2), { align: 'center', valign: 'middle' });
+
+            // Reset text color to black for the additional rows
+            doc.setTextColor(0, 0, 0);
+
+            // Add additional rows from the webpage
+            const subjects = document.querySelectorAll('.subject');
+            const types = document.querySelectorAll('.type');
+            const homeworks = document.querySelectorAll('.homework');
+
+            let currentRowY = rowYStart + textBoxHeight;
+            const pageHeight = 297;  // A4 height in mm
+            const bottomMargin = 20;  // Margin from the bottom of the page
+
+            for (let i = 0; i < subjects.length; i++) {
+                const splitSubjectText = doc.splitTextToSize(subjects[i].innerText.toUpperCase(), subjectCellWidth - 2);
+                const splitTypeText = doc.splitTextToSize(types[i].innerText.toUpperCase(), typeCellWidth - 2);
+                const splitHomeworkText = doc.splitTextToSize(homeworks[i].innerText, homeworkCellWidth - (2 * homeworkPadding));
+                const maxTextHeight = Math.max(splitSubjectText.length, splitTypeText.length, splitHomeworkText.length) * 7 + (2 * homeworkPadding);
+
+                // Check if adding this row would exceed the page height
+                if (currentRowY + maxTextHeight > pageHeight - bottomMargin) {
+                    doc.addPage();
+                    currentRowY = 10;  // Reset Y position for the new page
+                }
+
+                doc.rect(10, currentRowY, subjectCellWidth, maxTextHeight);
+                doc.text(splitSubjectText, 10 + (subjectCellWidth / 2), currentRowY + 7, { align: 'center', valign: 'top' });
+
+                doc.rect(10 + subjectCellWidth, currentRowY, typeCellWidth, maxTextHeight);
+                doc.text(splitTypeText, 10 + subjectCellWidth + (typeCellWidth / 2), currentRowY + 7, { align: 'center', valign: 'top' });
+
+                doc.rect(10 + subjectCellWidth + typeCellWidth, currentRowY, homeworkCellWidth, maxTextHeight);
+                doc.text(splitHomeworkText, 10 + subjectCellWidth + typeCellWidth + (homeworkCellWidth / 2), currentRowY + 7, { align: 'center', valign: 'top' });
+
+                currentRowY += maxTextHeight;  // Move to the next row position
+            }
+
+            // Add the requested text to the bottom of the PDF
+            doc.setFontSize(15);  // Updated font size to 15
+            doc.text("Till You Come back, have a Wonderful day", imgWidth / 2, 287, { align: 'center' });  // 287 is near the bottom of an A4 page
+
+            doc.save('HOMEWORK.pdf');
+        };
+    }
+</script>
+</body>
+</html>
