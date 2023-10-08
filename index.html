@@ -6,13 +6,22 @@
     <title>Student Form</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 20px;
-            text-align: left;
-        }
+	#studentForm {
+	width: 60%;
+	margin: 0 auto;
+	background-color: #ffffff;
+	padding: 20px;
+	box-shadow: 0px 0px 5px #aaa;
+	border-radius: 5px;
+	}
+	body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f8f8f8;
+	margin: 0;
+	padding: 20px;
+	text-align: LEFT; /* Corrected typo here */
+	}
+       
         label {
             display: block;
             margin-bottom: 8px;
@@ -74,9 +83,17 @@
 
         <div id="rowsContainer"></div>
 
-        <button type="button" onclick="addRow()">ADD ROW</button><br><br>
-        <button type="button" onclick="saveData()">Save</button><br><br>
-        <button type="button" onclick="refreshPage()">Refresh</button>
+      
+		<div style="display: inline-block; margin-right: 10px;">
+			<button type="button" onclick="addRow()">ADD ROW</button>
+		</div>
+		<div style="display: inline-block; margin-right: 10px;">
+			<button type="button" onclick="saveData()">DOWNLOAD PDF</button>
+		</div>
+		<div style="display: inline-block;">
+			<button type="button" onclick="refreshPage()">REFRESH</button>
+		</div>
+
     </form>
 <script>
    
