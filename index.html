@@ -1,89 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Form</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <style>
-	#studentForm {
-	width: 60%;
-	margin: 0 auto;
-	background-color: #ffffff;
-	padding: 20px;
-	box-shadow: 0px 0px 5px #aaa;
-	border-radius: 5px;
-	}
-	body {
-	font-family: 'Arial', sans-serif;
-	background-color: #f8f8f8;
-	margin: 0;
-	padding: 20px;
-	text-align: LEFT; /* Corrected typo here */
-	}
-       
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Student Form</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+	<style>
+		#studentForm {
+			width: 60%;
+			margin: 0 auto;
+			background-color: #ffffff;
+			padding: 20px;
+			box-shadow: 0px 0px 5px #aaa;
+			border-radius: 1px;
+		}
 
-        select, input[type="date"], textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+		body {
+			font-family: 'Arial', sans-serif;
+			background-color: #f8f8f8;
+			margin: 0;
+			padding: 20px;
+			text-align: CENTRE;
+			/* Corrected typo here */
+		}
 
-        button {
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-        }
+		label {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
 
-        button:hover {
-            background-color: #0056b3;
-        }
+		select,
+		input[type="date"],
+		textarea {
+			width: calc(100%);
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
 
-        div[contenteditable] {
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 5px;
-            box-sizing: border-box;
-        }
-    </style>
+		button {
+			padding: 12px 10px;
+			background-color: #007BFF;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-right: 10px;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+
+		div[contenteditable] {
+			width: 100%;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			padding: 10px;
+			margin-bottom: 5px;
+			box-sizing: border-box;
+		}
+	</style>
 </head>
+
 <body>
-    <form id="studentForm">
-        <label for="grade">Grade:</label>
-        <select id="grade" name="grade">
+	<form id="studentForm">
+		<label for="grade">Grade:</label>
+		<select id="grade" name="grade">
             <option value="NURSERY">NURSERY</option>
-            <!-- ... other grades ... -->
-            <option value="X">GRADE X</option>
+		    	  <option value="PP1">PP1</option>
+	          <option value="PP2">PP2</option>
+            <option value="GRADE I">GRADE I</option>
+            <option value="GRADE II">GRADE II</option>
+            <option value="GRADE III">GRADE III</option>
+            <option value="GRADE IV">GRADE IV</option>
+            <option value="GRADE V">GRADE V</option>
+            <option value="GRADE VI">GRADE VI</option>
+            <option value="GRADE VII">GRADE VII</option>
+            <option value="GRADE VIII">GRADE VIII</option>
+            <option value="GRADE IX">GRADE IX</option>
+            <option value="GRADE X">GRADE X</option>
+            <option value="GRADE XI">GRADE XI</option>
+            <option value="GRADE XII">GRADE XII</option>
         </select><br><br>
 
-        <label for="section">Section:</label>
-        <select id="section" name="section">
-            <option value="RAINBOW">SECTION : RAINBOW</option>
-            <!-- ... other sections ... -->
-            <option value="GAGARIAN">SECTION : GAGARIAN</option>
+		<label for="section">Section:</label>
+		<select id="section" name="section">
+<option value="RAINBOW">SECTION : RAINBOW</option>
+<option value="DUCKLINGS">SECTION : DUCKLINGS</option>
+<option value="LIGHTHOUSE">SECTION : LIGHTHOUSE</option>
+<option value="TWINKLESTAR">SECTION : TWINKLESTAR</option>
+<option value="DAISY">SECTION : DAISY</option>
+<option value="LOTUS">SECTION : LOTUS</option>
+<option value="KANGAROOS">SECTION : KANGAROOS</option>
+<option value="KOALAS">SECTION : KOALAS</option>
+<option value="MARS">SECTION : MARS</option>
+<option value="VENUS">SECTION : VENUS</option>
+<option value="MOON">SECTION : MOON</option>
+<option value="TITAN">SECTION : TITAN</option>
+<option value="GANGES">SECTION : GANGES</option>
+<option value="INDUS">SECTION : INDUS</option>
+<option value="BACH">SECTION : BACH</option>
+<option value="MOZART">SECTION : MOZART</option>
+<option value="CASSINI">SECTION : CASSINI</option>
+<option value="GALILEO">SECTION : CC</option>
+<option value="KEPLER">SECTION : KEPLER</option>
+<option value="DARWIN">SECTION : DARWIN</option>
+<option value="WALLACE">SECTION : WALLACE</option>
+<option value="FLEMING">SECTION : FLEMING</option>
+<option value=" EINSTEIN">SECTION : EINSTEIN</option>
+<option value="NEWTON">SECTION : NEWTON</option>
+<option value="ARMSTRONG">SECTION : ARMSTRONG</option>
+<option value="GAGARIAN">SECTION : GAGARIAN</option>
         </select><br><br>
 
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date"><br><br>
+		<label for="date">Date:</label>
+		<input type="date" id="date" name="date"><br><br>
 
-        <div id="rowsContainer"></div>
+		<div id="rowsContainer"></div>
 
-      
+
 		<div style="display: inline-block; margin-right: 10px;">
 			<button type="button" onclick="addRow()">ADD ROW</button>
 		</div>
@@ -94,10 +135,9 @@
 			<button type="button" onclick="refreshPage()">REFRESH</button>
 		</div>
 
-    </form>
-<script>
-   
-    function showForm() {
+	</form>
+	<script>
+		function showForm() {
         document.getElementById('studentForm').style.display = 'block';
         document.getElementById('homeworkButton').style.display = 'none';
     }
@@ -257,6 +297,7 @@
             doc.save('HOMEWORK.pdf');
         };
     }
-</script>
+	</script>
 </body>
+
 </html>
